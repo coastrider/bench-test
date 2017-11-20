@@ -13,9 +13,8 @@ def main():
     # Instantiate balances dictionary using benchtest/core.py module
     balances = benchtest.core.total_balances(host, resource)
 
-    # Output daily balances, sorted by Date
+    # Print daily balances, sorted by Date
     daily_balance = float(0)
-
     print(" — Daily balances:")
     print("Date\t\t Balance")
     print("-------\t\t -------")
@@ -23,7 +22,7 @@ def main():
         daily_balance += balances[day]
         print("{0}\t $ {1:.2f}".format(day, daily_balance))
 
-    # Output total balance
+    # Print total balance
     total_balance = sum(balances.values())
     print("\n — Total balance:")
     print(round(total_balance, 2))
