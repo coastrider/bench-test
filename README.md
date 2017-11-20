@@ -76,7 +76,7 @@ terraform apply
 ```
 Then just trigger the Lambda function using a manual test trigger event or any other valid event trigger. The app should run in a few milliseconds and the output should look like this: 
 
-![Alt text](bench-test/lambda-execution.png?raw=true "AWS Lambda Execution")
+![AWS Lambda execution](https://github.com/coastrider/bench-test/raw/master/lambda-execution.png)
 
 The drawback of this setup is that I had to package and refactor the entire application code, including dependencies in a new **lambda_deploy.zip** file as currently Lambda doesn't allow to deploy using version control. If the app is updated, a new source code .zip bundle will need to be generated each time and provided to Terraform. 
 
