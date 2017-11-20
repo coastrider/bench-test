@@ -1,4 +1,4 @@
-![alt text](https://circleci.com/gh/coastrider/bench-test.png?circle-token=:circle-token "CircleCI Status Badge")
+[![CircleCI](https://circleci.com/gh/coastrider/bench-test/tree/master.svg?style=svg)](https://circleci.com/gh/coastrider/bench-test/tree/master)
 # Bench RestTest take-home test 
 
 The following repo contains my solution to the Bench Rest Test take-home test using Python 3
