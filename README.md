@@ -16,6 +16,15 @@ Here is a high level overview of the project:
 pip3 install -r requirements.txt
 python3 run.py
 ```
+#### How to run with Docker
+The following `docker build` command needs to be run from the same directory than the **Dockerfile** contained in this repo:
+```bash
+docker build . -t bench-test-docker-image
+docker run --rm --name bench-test bench-test-docker-image 
+```
+The Docker run command should output the Daily Balances and Total Balance then automatically remove itself due to the *--rm* option
+
+
 #### Configuration 
 In order to decouple configuration from code, the file **sites.conf** contains target host information. In case there are any changes to the API endpoint such as URL content or structure, this file will need to be modified.
 
