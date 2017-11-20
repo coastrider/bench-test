@@ -1,23 +1,23 @@
-[![CircleCI](https://circleci.com/gh/coastrider/bench-test/tree/master.svg?style=svg)](https://circleci.com/gh/coastrider/bench-test/tree/master)
-# Bench RestTest take-home test 
+https://circleci.com/gh/coastrider/bench-test.png?circle-token=:circle-token 
+# Bench restTest π 
 
-The following repo contains my solution to the Bench Rest Test take-home test using Python 3
+The following repo contains my solution to the Bench Labs Rest Test take-home using Python 3
 
 Here is a high level overview of the project: 
   - Python 3 has a number of libraries and packages that can be used to interact with HTTP resources. I decided that the best choice is [Requests](http://docs.python-requests.org/en/master/user/quickstart/) for it's simplicity and built-in methods to handle JSON responses. 
 
-  - Using requests, the app retrieves the site's JSON content programatically and processes the response using two processor functions. 
+  - Using requests, the app retrieves the site's JSON content programmatically and processes the response using two processor functions. 
 
-  - All my scripts have been checked with [Pylint](https://www.pylint.org/) and I created a test suite using [Pytest](https://docs.pytest.org/en/latest/) which is is a no-boilerplate alternative to Python’s standard unittest module.
+  - All the Python scripts have been checked with [Pylint](https://www.pylint.org/) and I created a test suite using [Pytest](https://docs.pytest.org/en/latest/) which is is a no-boilerplate alternative to Python’s standard unittest module.
 
 ## Usage
-#### How to run
+#### How to run locally
 ```bash
 pip3 install -r requirements.txt
 python3 run.py
 ```
 #### How to run with Docker
-The following `docker build` command needs to be run from the same directory than the **Dockerfile** contained in this repo:
+The following `docker build` command needs to be run from the same directory than the **Dockerfile** present in this repository.
 ```bash
 docker build . -t bench-test-docker-image
 docker run --rm --name bench-test bench-test-docker-image 
@@ -35,7 +35,7 @@ The app will request paths numerically using a loop until a *404 - Not Found* HT
 ```bash
 pytest -v test_suite.py
 ```
-Which should outoput something like the following:
+Which should output something like the following:
 ```
 ============================================================================== test session starts ===============================================================================
 platform linux -- Python 3.6.2, pytest-3.2.5, py-1.5.2, pluggy-0.4.0 -- /usr/bin/python3.6
@@ -53,5 +53,23 @@ CircleCI is used for automated testing and triggers a build when a new commit is
 
 https://circleci.com/gh/coastrider/bench-test
 
+## Deploying to AWS
+I wanted to deploy the app on AWS as it's relevant to the position I'm applying for. I initially tried Elastic Beanstalk using the single Docker container configuration but decided it wasn't the best option due to the ephemeral nature of the app. Eventually, I decided to use Teraform to provision a Lambda function with the application code. Lambda is the perfect fit for this app as we can just execute it in response to an event such as a manual trigger, cron schedule or HTTP GET and not require any server or container to run continuously. 
+
+The following Terraform commands will provision the Lambda function as defined in the file **main.tf**
+
+```bash
+terraform init
+terraform plan
+terraform apply
+```
+Then just trigger the Lambda function using a manual test trigger event or any other valid event trigger. The app should run in a few ms run and the output should look like this: 
+
+
+The drawback of this setup is that I had to package and refactor the entire application code, including dependencies in the **lambda_deploy.zip** file as currently Lambda doesn't allow to deploy using version control. If the app is updated, a new source code .zip bundle will need to be generated each time and provided to Terraform. 
+
 ## Other considerations
+- The app could be further improved by making the package *benchtest/core.py* more modular, for example, create different modules for query site, balance_processor etc. That will allow a more decoupled architecture and the services to be used independently as the app grows. 
+- URL parsing and handling could be further improved. Currently it's very tailored to the URL structure of the restTest API which doesn't follow JSON API guidelines as described [here](http://jsonapi.org/recommendations/). 
+- Current deployment flow is very limited, and taking aside the CircleCI hook it lacks automation. Ideally, CircleCI should release the app to an staging environment in AWS to run further tests and then deploy to production.
 
