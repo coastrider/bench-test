@@ -1,3 +1,4 @@
+![alt text](https://circleci.com/gh/coastrider/bench-test.png?circle-token=:circle-token "CircleCI Status Badge")
 # Bench RestTest take-home test 
 
 The following repo contains my solution to the Bench Rest Test take-home test using Python 3
@@ -38,6 +39,10 @@ test_suite.py::test_http_exception PASSED
 test_suite.py::test_balance_processor PASSED
 test_suite.py::test_total_balance PASSED
 ```
+#### Automated Testing
+CircleCI is used for automated testing and triggers a build when a new commit is pushed to the master branch. Currently, it's only configured to run the test_suite.py Unit Tests:
+
+https://circleci.com/gh/coastrider/bench-test
 
 ## Other considerations
 
