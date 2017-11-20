@@ -23,14 +23,6 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-resource "aws_instance" "alberto-test-amazonlinux" {
-  ami = "ami-32d8124a"
-  instance_type = "t2.micro"
-  tags {
-    Name = "alberto-test-amazonlinux"
-  }
-}
-
 resource "aws_lambda_function" "benchtest-lambda" {
   filename         = "lambda_deploy.zip"
   function_name    = "benchtest-lambda"
